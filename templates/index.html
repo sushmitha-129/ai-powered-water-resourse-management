@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Water Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>AI-Powered Community Water Management</h1>
+
+    <!-- Add Community Form -->
+    <h3>Add Community</h3>
+    <form action="/add_community" method="POST">
+        Name: <input type="text" name="name" required>
+        Population: <input type="number" name="population" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- Add Daily Usage Form -->
+    <h3>Add Daily Usage</h3>
+    <form action="/add_usage" method="POST">
+        Community:
+        <select name="community_id">
+            {% for row in data %}
+            <option value="{{ row['community_id'] }}">{{ row['Community'] }}</option>
+            {% endfor %}
+        </select>
+        Date: <input type="date" name="date" required>
+        Usage: <input type="number" name="usage" required>
+        <button type="submit">Add Usage</button>
+    </form>
+
+    <h3>Dashboard</h3>
+    <div id="barChart"></div>
+    <div id="pieChart"></div>
+
+    <table id="dataTable">
+        <tr>
+            <th>Community</th><th>Population</th><th>Avg Usage</th>
+            <th>Predicted Demand</th><th>Current Supply</th>
+            <th>Shortage</th><th>Optimized Share</th><th>Final Supply</th><th>Payment</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row['Community'] }}</td>
+            <td>{{ row['Population'] }}</td>
+            <td>{{ row['Avg_Usage']|int }}</td>
+            <td>{{ row['Predicted_Demand']|int }}</td>
+            <td>{{ row['Current_Supply']|int }}</td>
+            <td style="color: {% if row['Shortage'] %}red{% else %}green{% endif %}">{{ row['Shortage'] }}</td>
+            <td>{{ row['Optimized_Share']|int }}</td>
+            <td>{{ row['Final_Supply']|int }}</td>
+            <td>{{ row['Payment']|round(2) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

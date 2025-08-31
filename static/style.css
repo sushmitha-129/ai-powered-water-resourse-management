@@ -1,0 +1,7 @@
+body { font-family: Arial,sans-serif; background:#f4f7f9; margin:20px; }
+.container { background:white; padding:20px; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.1); }
+h1 { color:#0077b6; }
+table { width:100%; border-collapse: collapse; margin-top:20px; }
+th,td { border:1px solid #ccc; padding:8px; text-align:center; }
+th { background-color:#0077b6; color:white; }
+form { margin-bottom:20px; }
